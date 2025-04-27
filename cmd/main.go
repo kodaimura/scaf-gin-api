@@ -36,8 +36,6 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	router.SetStatic(r)
-	router.SetWeb(r.Group("/"))
 	router.SetApi(r.Group("/api"))
 	r.Run(":" + config.AppPort)
 }

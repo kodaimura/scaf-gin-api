@@ -22,24 +22,6 @@ func NewAccountController(accountService service.AccountService) *AccountControl
 	}
 }
 
-// GET /signup
-func (ctrl *AccountController) SignupPage(c *gin.Context) {
-	c.HTML(200, "signup.html", gin.H{})
-}
-
-// GET /login
-func (ctrl *AccountController) LoginPage(c *gin.Context) {
-	c.HTML(200, "login.html", gin.H{})
-}
-
-// GET /logout
-func (ctrl *AccountController) Logout(c *gin.Context) {
-	core.Auth.RevokeRefreshToken(helper.GetRefreshToken(c))
-	helper.SetAccessTokenCookie(c, "")
-	helper.SetRefreshTokenCookie(c, "")
-	c.Redirect(303, "/login")
-}
-
 // POST /api/accounts/signup
 func (ctrl *AccountController) ApiSignup(c *gin.Context) {
 	var req request.Signup
