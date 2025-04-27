@@ -1,9 +1,8 @@
 
 # ScafGinAPI
 
-[Gin](https://gin-gonic.com/)を用いたAPI開発のためのテンプレートです。  
+https://github.com/kodaimura/scaf-gin の派生プロジェクトで、API開発に特化したテンプレートです。  
 ディレクトリ構成と、ログイン・サインアップAPIなどを提供しています。
-[ScafGin](https://github.com/kodaimura/scaf-gin) の派生プロジェクトです。
 
 ### 必要なツール
 - **Docker**
@@ -25,6 +24,7 @@ make up
 ```
 
 ログイン・サインアップ機能付きの**Gin API**が立ち上がります。  
+http://localhost:8000/api
 
 ---
 
