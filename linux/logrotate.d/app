@@ -1,0 +1,19 @@
+/usr/src/app/log/app.log
+{
+    daily
+    rotate 60
+    copytruncate
+    dateext
+    ifempty
+    missingok
+}
+
+/usr/src/app/log/access.log
+{
+    daily
+    rotate 60
+    copytruncate
+    dateext
+    ifempty
+    missingok
+}
