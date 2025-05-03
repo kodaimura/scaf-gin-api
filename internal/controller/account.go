@@ -39,12 +39,7 @@ func (ctrl *AccountController) ApiSignup(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, response.Account{
-		AccountId:   account.AccountId,
-		AccountName: account.AccountName,
-		CreatedAt:   account.CreatedAt,
-		UpdatedAt:   account.UpdatedAt,
-	})
+	c.JSON(201, response.FromModelAccount(account))
 }
 
 // POST /api/accounts/login
@@ -92,12 +87,7 @@ func (ctrl *AccountController) ApiLogin(c *gin.Context) {
 		RefreshToken:     refreshToken,
 		AccessExpiresIn:  config.AccessTokenExpiresSeconds,
 		RefreshExpiresIn: config.RefreshTokenExpiresSeconds,
-		Account: response.Account{
-			AccountId:   account.AccountId,
-			AccountName: account.AccountName,
-			CreatedAt:   account.CreatedAt,
-			UpdatedAt:   account.UpdatedAt,
-		},
+		Account: response.FromModelAccount(account),
 	})
 }
 
@@ -147,12 +137,29 @@ func (ctrl *AccountController) ApiGetOne(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, response.Account{
-		AccountId:   account.AccountId,
-		AccountName: account.AccountName,
-		CreatedAt:   account.CreatedAt,
-		UpdatedAt:   account.UpdatedAt,
+	c.JSON(200, response.FromModelAccount(account))
+}
+
+// PUT /api/accounts/me
+func (ctrl *AccountController) ApiPutOne(c *gin.Context) {
+	accountId := helper.GetAccountId(c)
+
+	var req request.PutAccount
+	if err := helper.BindJSON(c, &req); err != nil {
+		c.Error(err)
+		return
+	}
+
+	account, err := ctrl.accountService.UpdateOne(input.Account{
+		AccountId:   accountId,
+		AccountName: req.AccountName,
 	})
+	if err != nil {
+		c.Error(err)
+		return
+	}
+
+	c.JSON(200, response.FromModelAccount(account))
 }
 
 // PUT /api/accounts/me/password
@@ -186,33 +193,6 @@ func (ctrl *AccountController) ApiPutPassword(c *gin.Context) {
 	c.JSON(200, gin.H{})
 }
 
-// PUT /api/accounts/me
-func (ctrl *AccountController) ApiPutOne(c *gin.Context) {
-	accountId := helper.GetAccountId(c)
-
-	var req request.PutAccount
-	if err := helper.BindJSON(c, &req); err != nil {
-		c.Error(err)
-		return
-	}
-
-	account, err := ctrl.accountService.UpdateOne(input.Account{
-		AccountId:   accountId,
-		AccountName: req.AccountName,
-	})
-	if err != nil {
-		c.Error(err)
-		return
-	}
-
-	c.JSON(200, response.Account{
-		AccountId:   account.AccountId,
-		AccountName: account.AccountName,
-		CreatedAt:   account.CreatedAt,
-		UpdatedAt:   account.UpdatedAt,
-	})
-}
-
 // DELETE /api/accounts/me
 func (ctrl *AccountController) ApiDeleteOne(c *gin.Context) {
 	accountId := helper.GetAccountId(c)
@@ -221,5 +201,5 @@ func (ctrl *AccountController) ApiDeleteOne(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{})
+	c.JSON(204, nil)
 }
