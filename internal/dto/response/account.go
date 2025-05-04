@@ -2,6 +2,7 @@ package response
 
 import (
 	"scaf-gin/internal/model"
+	"time"
 )
 
 // ============================
@@ -11,8 +12,8 @@ import (
 type Account struct {
 	AccountId   int    `json:"account_id"`
 	AccountName string `json:"account_name"`
-	CreatedAt   string `json:"created_at"`
-	UpdatedAt   string `json:"updated_at"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 func FromModelAccount(m model.Account) Account {
