@@ -10,8 +10,8 @@ import (
 // ============================
 
 type Account struct {
-	AccountId   int    `json:"account_id"`
-	AccountName string `json:"account_name"`
+	AccountId   int       `json:"account_id"`
+	AccountName string    `json:"account_name"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
 }
