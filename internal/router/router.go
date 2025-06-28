@@ -3,9 +3,9 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 
-	"scaf-gin/internal/domain/account"
-	"scaf-gin/internal/domain/auth"
 	"scaf-gin/internal/infrastructure/db"
+	"scaf-gin/internal/module/account"
+	"scaf-gin/internal/module/auth"
 )
 
 var gorm = db.NewGormDB()
